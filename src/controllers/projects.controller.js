@@ -1,5 +1,6 @@
 import { request, response } from "express";
 import { Project } from "../models/Project.js";
+import { Task } from "../models/Task.js";
 
 export const createProjects = async (req=request, res=response) => {
     const { name, priority, description } = req.body
@@ -10,7 +11,6 @@ export const createProjects = async (req=request, res=response) => {
             priority, 
             description
         })
-        console.log('newProject', newProject)
     
         res.json({ newProject })
     } catch (error) {
@@ -21,7 +21,6 @@ export const createProjects = async (req=request, res=response) => {
 export const getProjects = async (req=request, res=response) => {
     try {
         const projects = await Project.findAll()
-        console.log('projects', projects)
 
         res.json({ projects })
     } catch (error) {
@@ -84,4 +83,25 @@ export const deleteProject = async (req=request, res=response) => {
         res.status(500).json({ message: error.message })
     }
 
+}
+
+export const getTasksByUIDProject = async function (req=request, res=response) {
+    const { uidProject } = req.params
+    
+    try {
+        const project = await Project.findByPk(uidProject)
+
+        if (!project) return res.status(404).json({ message: 'This project not found.' })
+
+        const tasks = await Task.findAll({
+            where: { projectUid: uidProject }
+        })
+
+        res.status(200).json({
+            tasks
+        })
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 }

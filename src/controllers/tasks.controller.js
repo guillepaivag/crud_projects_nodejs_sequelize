@@ -86,11 +86,3 @@ export const deleteTaskByUID = async function (req=request, res=response) {
         res.status(500).json({ message: error.message })
     }
 }
-
-export const getTasksByUIDProject = async function (req=request, res=response) {
-    try {
-        
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-}
