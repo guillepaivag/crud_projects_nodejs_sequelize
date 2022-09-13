@@ -19,7 +19,7 @@ router.put('/:uid', updateProject)
 router.delete('/:uid', deleteProject)
 
 // Otros endpoints
-router.get('/tasks/:uidProject', getTasksByUIDProject)
+router.get('/:uid/tasks', getTasksByUIDProject)
 
 
 export default router

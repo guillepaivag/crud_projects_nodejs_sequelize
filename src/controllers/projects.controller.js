@@ -86,15 +86,15 @@ export const deleteProject = async (req=request, res=response) => {
 }
 
 export const getTasksByUIDProject = async function (req=request, res=response) {
-    const { uidProject } = req.params
+    const { uid } = req.params
     
     try {
-        const project = await Project.findByPk(uidProject)
+        const project = await Project.findByPk(uid)
 
         if (!project) return res.status(404).json({ message: 'This project not found.' })
 
         const tasks = await Task.findAll({
-            where: { projectUid: uidProject }
+            where: { projectUid: uid }
         })
 
         res.status(200).json({
